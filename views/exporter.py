@@ -3,8 +3,6 @@ from parameters.model import Parameters
 from .model import *
 from typing import List
 
-schema_filter = "NOT IN ('information_schema', 'mysql', 'performance_schema', 'sys')"
-
 
 class ViewExporter:
     def __init__(self, params: Parameters, con: connection.MySQLConnection):
