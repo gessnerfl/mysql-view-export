@@ -1,6 +1,6 @@
 from .model import *
 from argparse import Namespace
-import getpass
+from getpass import getpass
 
 
 def __read_int_input(msg: str) -> int:
@@ -29,5 +29,6 @@ def complete_input(args: Namespace) -> Parameters:
     port = args.port if args.port is not None else __read_int_input('MySQL TCP port: ')
     user = args.user if args.user is not None else __read_string_input('MySQL user: ')
     password = args.password if args.password is not None else __read_password_input('MySQL user password: ')
+    schema_for_export = args.schema if args.schema is not None else __read_string_input('MySQL Schema for View Export: ')
     output_path = args.out if args.out is not None else __read_string_input('Output file path: ')
-    return Parameters(DbConnectionParameters(host, port, user, password), output_path)
+    return Parameters(DbConnectionParameters(host, port, user, password), schema_for_export, output_path)

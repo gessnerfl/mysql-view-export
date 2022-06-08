@@ -20,5 +20,6 @@ parameters is missing
 -P, --port         the database port
 -u, --user         the database user name
 -p, --password     the database user password
+-S, --schema       the database schema for which the view should be exported
 -o, --out          the path to the output file where the export should be written to
 ```

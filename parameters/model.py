@@ -26,8 +26,17 @@ class DbConnectionParameters:
         self.username = username
         self.password = password
 
+    def to_dict(self):
+        return self.__dict__
+
 
 class Parameters:
-    def __init__(self, mysql: DbConnectionParameters, output_file: str):
+    def __init__(self, mysql: DbConnectionParameters, schema_for_export: str, output_file: str):
         self.mysql = mysql
+        self.schema_for_export = schema_for_export
         self.output_file = output_file
+
+    def to_dict(self):
+        d = self.__dict__
+        d['mysql'] = self.mysql.__dict__
+        return d
