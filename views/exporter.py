@@ -36,9 +36,9 @@ class ViewExporter:
 
     def __extend_view_metadata_with_create_statement(self, meta: ViewMetaData) -> View:
         with self.__connection.cursor() as cursor:
-            query = "SHOW CREATE VIEW %s.%s".format(meta.schema, meta.name)
+            query = "SHOW CREATE VIEW {}.{}".format(meta.schema, meta.name)
             cursor.execute(query.format(self.__params.schema_for_export))
-            result = cursor.fetchall()
+            result = cursor.fetchone()
             return View(meta, result[1])
 
 

@@ -1,6 +1,16 @@
 import argparse
 
 from parameters.completion import *
+from views.exporter import get_views_for_export
+from views.model import View
+from typing import List
+
+
+def write_output(views: List[View], outfile: str):
+    with open(outfile, "x") as f:
+        for v in views:
+            f.write(v.create_statement)
+            f.write("\n\n")
 
 
 def run_application():
@@ -15,7 +25,10 @@ def run_application():
     args = args_parser.parse_args()
 
     params = complete_input(args)
-    print(params.to_dict())
+
+    with get_views_for_export(params) as f:
+        views = f.provide()
+        write_output(views, params.output_file)
 
 
 run_application()
