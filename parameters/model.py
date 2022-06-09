@@ -1,3 +1,6 @@
+from typing import Union
+
+
 class InvalidConfigurationException(Exception):
     def __init__(self, message):
         self.message = message
@@ -28,7 +31,9 @@ class DbConnectionParameters:
 
 
 class Parameters:
-    def __init__(self, mysql: DbConnectionParameters, schema_for_export: str, output_file: str):
+    def __init__(self, mysql: DbConnectionParameters, schema_for_export: str, output_file: str,
+                 filter_condition: Union[str, None]):
         self.mysql = mysql
         self.schema_for_export = schema_for_export
         self.output_file = output_file
+        self.filter_condition = filter_condition

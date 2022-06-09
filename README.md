@@ -22,4 +22,7 @@ parameters is missing
 -p, --password     the database user password
 -S, --schema       the database schema for which the view should be exported
 -o, --out          the path to the output file where the export should be written to
+-f, --filter       a filter condition to select only specific views. Views for import are selected 
+                   from information_schema.views. Columns from this table/view can be used in the
+                   filter condition
 ```

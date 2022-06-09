@@ -15,6 +15,7 @@ class ViewExporter:
 
     def __get_views_of_schema(self) -> List[ViewMetaData]:
         with self.__connection.cursor() as cursor:
+            additional_where = " AND " + self.__params.filter_condition if self.__params.filter_condition is not None else ""
             query = """
             SELECT TABLE_SCHEMA,
                    TABLE_NAME, 
@@ -26,9 +27,9 @@ class ViewExporter:
                    CHARACTER_SET_CLIENT, 
                    COLLATION_CONNECTION 
             FROM information_schema.VIEWS
-            WHERE TABLE_SCHEMA = '{}';
+            WHERE TABLE_SCHEMA = '{}'{};
             """
-            cursor.execute(query.format(self.__params.schema_for_export))
+            cursor.execute(query.format(self.__params.schema_for_export, additional_where))
             result = cursor.fetchall()
             return [ViewMetaData(i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], i[8]) for i in result]
 
