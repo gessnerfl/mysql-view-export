@@ -1,16 +1,15 @@
 import argparse
 
 from parameters.completion import *
-from views.exporter import get_views_for_export
+from views import exporter
 from views.model import View
 from typing import List
-import sqlparse
 
 
 def write_output(views: List[View], outfile: str):
     with open(outfile, "x") as f:
         for v in views:
-            f.write(sqlparse.format(v.create_statement, reindent=True, keyword_case='upper'))
+            f.write(v.create_statement)
             f.write("\n\n")
 
 
@@ -26,11 +25,13 @@ def run_application():
     args_parser.add_argument('-o', '--out', help='the file path of the output file', type=str, required=False)
     args_parser.add_argument('-f', '--filter', help='a filter condition to select only specific views', type=str,
                              required=False)
+    args_parser.add_argument('--exclude-algorithm', help='exclude view algorithm from export', action='store_true')
+    args_parser.add_argument('--exclude-definer', help='exclude view definer from export', action='store_true')
     args = args_parser.parse_args()
 
     params = complete_input(args)
 
-    with get_views_for_export(params) as f:
+    with exporter.factory(params) as f:
         views = f.provide()
         write_output(views, params.output_file)
 

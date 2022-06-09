@@ -32,8 +32,10 @@ class DbConnectionParameters:
 
 class Parameters:
     def __init__(self, mysql: DbConnectionParameters, schema_for_export: str, output_file: str,
-                 filter_condition: Union[str, None]):
+                 filter_condition: Union[str, None], exclude_algorithm: bool, exclude_definer: bool):
         self.mysql = mysql
         self.schema_for_export = schema_for_export
         self.output_file = output_file
         self.filter_condition = filter_condition
+        self.exclude_algorithm = exclude_algorithm
+        self.exclude_definer = exclude_definer

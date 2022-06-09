@@ -1,5 +1,6 @@
 from mysql.connector import connect, connection
 from parameters.model import Parameters
+from .formatter import Formatter
 from .model import *
 from typing import List
 
@@ -8,6 +9,7 @@ class ViewExporter:
     def __init__(self, params: Parameters, con: connection.MySQLConnection):
         self.__params = params
         self.__connection = con
+        self.__formatter = Formatter(params)
 
     def provide(self) -> List[View]:
         views = self.__get_views_of_schema()
@@ -38,7 +40,7 @@ class ViewExporter:
             query = "SHOW CREATE VIEW {}.{}".format(meta.schema, meta.name)
             cursor.execute(query.format(self.__params.schema_for_export))
             result = cursor.fetchone()
-            return View(meta, result[1])
+            return View(meta, self.__formatter.format(result[1]))
 
 
 class ViewExporterFactory:
@@ -55,5 +57,5 @@ class ViewExporterFactory:
         self.__connection.close()
 
 
-def get_views_for_export(params: Parameters) -> ViewExporterFactory:
+def factory(params: Parameters) -> ViewExporterFactory:
     return ViewExporterFactory(params)

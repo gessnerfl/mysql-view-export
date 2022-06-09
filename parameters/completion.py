@@ -31,4 +31,5 @@ def complete_input(args: Namespace) -> Parameters:
     password = args.password if args.password is not None else __read_password_input('MySQL user password: ')
     schema_for_export = args.schema if args.schema is not None else __read_string_input('MySQL Schema for View Export: ')
     output_path = args.out if args.out is not None else __read_string_input('Output file path: ')
-    return Parameters(DbConnectionParameters(host, port, user, password), schema_for_export, output_path, args.filter)
+    return Parameters(DbConnectionParameters(host, port, user, password), schema_for_export, output_path, args.filter,
+                      args.exclude_algorithm, args.exclude_definer)
