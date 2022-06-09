@@ -4,12 +4,13 @@ from parameters.completion import *
 from views.exporter import get_views_for_export
 from views.model import View
 from typing import List
+import sqlparse
 
 
 def write_output(views: List[View], outfile: str):
     with open(outfile, "x") as f:
         for v in views:
-            f.write(v.create_statement)
+            f.write(sqlparse.format(v.create_statement, reindent=True, keyword_case='upper'))
             f.write("\n\n")
 
 
