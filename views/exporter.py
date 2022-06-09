@@ -40,7 +40,9 @@ class ViewExporter:
             query = "SHOW CREATE VIEW {}.{}".format(meta.schema, meta.name)
             cursor.execute(query.format(self.__params.schema_for_export))
             result = cursor.fetchone()
-            return View(meta, self.__formatter.format(result[1]))
+            formatted_create_statement = self.__formatter.format(result[1])
+            full_create_statement = "DROP VIEW IF EXISTS {};\n{}".format(meta.name, formatted_create_statement)
+            return View(meta, full_create_statement)
 
 
 class ViewExporterFactory:
