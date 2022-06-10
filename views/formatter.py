@@ -14,4 +14,7 @@ class Formatter:
         stmt = self.definer_regex.sub('', original) if self.params.exclude_definer else original
         stmt = self.algorithm_regex.sub('', stmt) if self.params.exclude_algorithm else stmt
 
+        stmt = stmt.replace('`' + self.params.schema_for_export + '`.', "")
+        stmt = stmt.replace(self.params.schema_for_export + ".", "")
+
         return sqlparse.format(stmt, reindent=True, keyword_case='upper')
