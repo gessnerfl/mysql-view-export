@@ -27,6 +27,8 @@ def run_application():
                              required=False)
     args_parser.add_argument('--exclude-algorithm', help='exclude view algorithm from export', action='store_true')
     args_parser.add_argument('--exclude-definer', help='exclude view definer from export', action='store_true')
+    args_parser.add_argument('-r', '--recursive', help='recursively include views which depend on located views',
+                             action='store_true')
     args = args_parser.parse_args()
 
     params = complete_input(args)

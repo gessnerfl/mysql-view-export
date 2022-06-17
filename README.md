@@ -27,4 +27,5 @@ parameters is missing
                      filter condition
 --exclude-algorithm  exclude view algorithm from export
 --exclude-definer    exclude view definer from export
+-r, --recursive      recursively include views which depend on already selected views
 ```

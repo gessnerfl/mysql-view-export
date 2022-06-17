@@ -11,6 +11,9 @@ class ViewMetaData:
         self.character_set_client = character_set_client
         self.collation_connection = collation_connection
 
+    def __eq__(self, other):
+        return self.schema == other.schema and self.name == other.name
+
 
 class View:
     def __init__(self, meta_data: ViewMetaData, create_statement: str):
